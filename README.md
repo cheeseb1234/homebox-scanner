@@ -151,3 +151,5 @@ Those can be rendered either by your own label system or by calling HomeBox's QR
 - "Open in HomeBox" deep-linking is only exact if `VITE_HB_OPEN_ENTITY_URL_TEMPLATE` is configured.
 - Quantity adjustment notes are only persisted when the user explicitly chooses to append them to the HomeBox notes field.
 - Camera scanning relies on the browser's `BarcodeDetector` support and is optional.
+
+- Find this useful? Feel free to donate https://buymeacoffee.com/rarecore
