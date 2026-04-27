@@ -15,6 +15,13 @@ With proxy mode on, the browser calls the local Vite server and Vite forwards to
 
 A scanner-first, mobile-first progressive web app that sits on top of HomeBox and keeps HomeBox as the system of record.
 
+## Screenshots and walkthrough
+
+See [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md) for a screenshot-guided walkthrough of the mobile workflow.
+
+<img src="screenshots/Screenshot_20260426_201018.png" alt="HomeBox Scanner scan screen" width="300">
+
+
 ## What this MVP does
 
 - Username/password connection to a HomeBox instance
