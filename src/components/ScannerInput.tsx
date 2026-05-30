@@ -7,6 +7,7 @@ interface ScannerInputProps {
   submitLabel?: string;
   autoFocus?: boolean;
   autoSubmitOnEnter?: boolean;
+  blurOnSubmit?: boolean;
   onSubmit: (value: string) => void | Promise<void>;
   helperText?: string;
   defaultValue?: string;
@@ -20,6 +21,7 @@ export function ScannerInput({
   submitLabel = 'Go',
   autoFocus = true,
   autoSubmitOnEnter = true,
+  blurOnSubmit = false,
   onSubmit,
   helperText,
   defaultValue = '',
@@ -40,7 +42,11 @@ export function ScannerInput({
     if (!trimmed) return;
     void onSubmit(trimmed);
     setValue('');
-    window.setTimeout(() => inputRef.current?.focus(), 10);
+    if (blurOnSubmit) {
+      inputRef.current?.blur();
+    } else {
+      window.setTimeout(() => inputRef.current?.focus(), 10);
+    }
   }
 
   return (

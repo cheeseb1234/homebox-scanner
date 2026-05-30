@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Layout } from '../components/Layout';
 import { ScannerInput } from '../components/ScannerInput';
 import { StatusBanner } from '../components/StatusBanner';
@@ -87,6 +87,7 @@ function sortAndLimitResults(results: EntitySummary[], rawQuery: string): Entity
 export function ScanPage(): JSX.Element {
   const { api } = useSession();
   const queryClient = useQueryClient();
+  const resultsRef = useRef<HTMLElement | null>(null);
   const [message, setMessage] = useState<{ tone: 'success' | 'error' | 'info'; text: string }>();
   const [results, setResults] = useState<EntitySummary[]>([]);
   const [resultSubtitles, setResultSubtitles] = useState<Record<string, string>>({});
@@ -208,6 +209,16 @@ export function ScanPage(): JSX.Element {
     }
   }
 
+  // Scroll to results when search results appear
+  useEffect(() => {
+    if (results.length > 0) {
+      // Small delay so DOM renders the results first
+      window.setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    }
+  }, [results.length]);
+
   return (
     <Layout title="Scan / Search">
       <div className="hero-card simple-hero-card">
@@ -224,6 +235,7 @@ export function ScanPage(): JSX.Element {
       <ScannerInput
         label="Scan or search"
         placeholder="Item, asset, tag, or location"
+        blurOnSubmit
         helperText="Results can be items or locations. Item pages include Move, Adjust Quantity, Quick Create, and Open in HomeBox."
         onSubmit={searchEverything}
         cameraButton={<CameraScanButton onDetected={(value) => void searchEverything(value)} />}
@@ -245,7 +257,7 @@ export function ScanPage(): JSX.Element {
         </div>
       ) : null}
 
-      <section className="field-section">
+      <section className="field-section" ref={resultsRef}>
         <div className="section-heading-row">
           <div>
             <div className="eyebrow">Results</div>
